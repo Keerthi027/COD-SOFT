@@ -1,0 +1,29 @@
+Naive Bayes Accuracy: 0.9677
+              precision    recall  f1-score   support
+
+         ham       0.96      1.00      0.98       965
+        spam       1.00      0.76      0.86       150
+
+    accuracy                           0.97      1115
+   macro avg       0.98      0.88      0.92      1115
+weighted avg       0.97      0.97      0.97      1115
+
+Logistic Regression Accuracy: 0.9507
+              precision    recall  f1-score   support
+
+         ham       0.95      1.00      0.97       965
+        spam       0.98      0.65      0.78       150
+
+    accuracy                           0.95      1115
+   macro avg       0.96      0.82      0.88      1115
+weighted avg       0.95      0.95      0.95      1115
+
+SVM Accuracy: 0.9749
+              precision    recall  f1-score   support
+
+         ham       0.97      1.00      0.99       965
+        spam       0.98      0.83      0.90       150
+
+    accuracy                           0.97      1115
+   macro avg       0.98      0.91      0.94      1115
+weighted avg       0.98      0.97      0.97      1115
