@@ -1,0 +1,43 @@
+import pandas as pd
+import numpy as np
+import re
+import string
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, classification_report
+
+df = pd.read_csv(r"C:\Users\siva2\archive (1).zip", encoding='latin-1')
+df.columns = ['col1', 'col2', 'col3', 'col4', 'col5'] 
+
+print(df.shape)  # Shows number of rows and columns
+print(df.columns)  # Shows the current column names
+
+df = df.iloc[:, :2]
+df.columns = ['label', 'message']
+
+print(df.head()) 
+def preprocess_text(text):
+    text = text.lower()
+    text = re.sub(f"[{string.punctuation}]", "", text)
+    return text
+
+df['message'] = df['message'].apply(preprocess_text)
+
+X_train, X_test, y_train, y_test = train_test_split(df['message'], df['label'], test_size=0.2, random_state=42)
+tfidf_vectorizer = TfidfVectorizer(stop_words='english')
+X_train_tfidf = tfidf_vectorizer.fit_transform(X_train)
+X_test_tfidf = tfidf_vectorizer.transform(X_test)
+models = {
+    "Naive Bayes": MultinomialNB(),
+    "Logistic Regression": LogisticRegression(),
+    "SVM": SVC()
+}
+
+for name, model in models.items():
+    model.fit(X_train_tfidf, y_train)
+    y_pred = model.predict(X_test_tfidf)
+    print(f"{name} Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+    print(classification_report(y_test, y_pred))
